@@ -20,7 +20,8 @@ SECRET_KEY = 'django-insecure-rf@%8d37r1juvjc6gvp*7+cj6m9&2o3&36ct*ncidxl+ei5%)_
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'hojidjangoblog011.pythonanywhere.com'
+    'hojidjangoblog011.pythonanywhere.com',
+    '127.0.0.1'
 ]
 
 

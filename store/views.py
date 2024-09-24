@@ -28,8 +28,6 @@ class SearchResults(SearchResultsView):
         return filtered
 
 
-
-
 def item_details(request, item_slug):
     item = get_object_or_404(Item, slug=item_slug)
     context = {
