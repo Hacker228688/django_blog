@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+<h1>Ювелирный магазин Diamondique: украшайте жизнь вместе с нами<br /></h1>
+<p>Кто из девушек и женщин не мечтает иметь дорогое, красивое и элегантное украшение? Каждая хочет выглядеть великолепно,
+    а дополнить образ могут серебряные и золотые ювелирные изделия. Купить кольца, серьги, бриллианты, подвески, колье, браслеты, цепи и др.
+    можно в ювелирном магазине Diamondique, где клиентам предлагают выгодные условия сотрудничества и большой ассортимент продукции на любой вкус и кошелек.</p>
+
+<section class="tiles">
+    {% for item in page_obj %}
+    <article class="style{{ range|random }}">
+        <span class="image">
+        {% if item.image %}
+            <img src="{{ item.image.url }}" alt="" style="width: 353px; height: 326px;" />
+        {% else %}
+            <img src="{% static "images/pic01.jpg" %}" alt="" />
+        {% endif %}
+        </span>
+        <a href="{% url 'store:item_details' item.slug %}">
+            <div class="tag">
+                <object> 
+                    {% for tag in item.tags.all %}
+                        <a href="{% url 'store:tag_details' tag.slug %}" style="color: white">{{ tag }}</a>
+                        {% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                </object><br />
+            </div>
+            <h2>{{ item.title }}</h2>
+            <div class="content">
+                <p>{{ item.description|truncatechars:150 }}</p>
+            </div>
+        </a>
+    </article>
+    {% endfor %}
+</section>
+{% endblock %} 
