@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block css %}
+  <link rel="stylesheet" href="{% static "assets/css/cart.css"%}" />
+{% endblock %}
+
+{% block content %}
+<h1>Избранное</h1>
+{% if favorites_items %}
+  <section>
+    <div class="table-wrapper">
+      <table class="alt">
+        <thead>
+          <tr>
+            <th>Название</th>
+            <th>Количество</th>
+            <th>Цена</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for favorites_item in favorites_items %}
+          <tr>
+            <td><a href="{% url 'store:item_details' favorites_item.item.slug %}">{{ favorites_item.item.title }}</a></td>
+            <td>
+                <div class="count">
+                  <span class="minus">—</span>
+                  <input type="number" value="{{ favorites_item.quantity }}" class="quantity-input" data-favorites-item-id="{{ favorites_item.id }}">
+                  <span class="plus">+</span>
+                </div>
+                <form id="update-favorites-item-form" method="POST" action="{% url 'favorites:update_favorites_item' %}" style="display:none;">
+                  {% csrf_token %}
+                  <input type="hidden" id="new-quantity-input" name="new_quantity">
+                  <input type="hidden" id="favorites-item-id-input" name="favorites_item_id">
+                </form>
+            </td>
+            <td class="favorites-item-total-price" data-fvorites-item-id="{{ favorites_item.id }}">{{ favorites_item.total_price }}</td>
+            <td style="border: none; background-color: #ffffff;" align="center">
+              <a href="{% url 'favorites:delete_favorites_item' favorites_item.item.slug %}">
+                <img src ="{% static "images/garbage.svg" %}" width="25" height="25" >
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2"></td>
+            <td><u><b><span id="favorites-total-price" data-cart-id="{{ favorites.id }}">{{ favorites.total_price }}</span></b></u></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </section>
+  <div style="text-align: justify;">
+    <a href="{% url 'store:home' %}" style="float: left;" class="button">Продолжить покупки</a>
+    <a href="{% url 'checkout:checkout' %}" style="float: right;" class="button">Оформить заказ</a>
+  </div>
+{% else %}
+  <p>Ваши избранные товары пусты.</p>
+{% endif %}
+{% block js %}
+  <script src={% static "assets/js/ajax.js"%}></script>
+{% endblock %}
+{% endblock %}

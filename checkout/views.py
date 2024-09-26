@@ -9,9 +9,7 @@ from .models import Order, OrderItem, ShippingAddress
 
 @login_required
 def checkout(request):
-    """
-    Представление чекаута.
-    """
+
     cart = Cart.objects.get(user=request.user)
     form = OrderCreateForm()
     context = {'cart': cart, 'form': form}
@@ -21,20 +19,14 @@ def checkout(request):
 
 @login_required
 def thank_you(request, order_id):
-    """
-    Страница благодарности за заказ.
-    """
+
     order = get_object_or_404(Order, id=order_id, user=request.user)
     return render(request, 'checkout/thank_you.html', {'order': order})
 
 
 @login_required
 def create_order(request):
-    """
-    Создание экземпляров Order и ShippingAddress
-    из формы и редирект в профиль пользователя,
-    либо передаем форму обратно.
-    """
+
     cart = get_object_or_404(Cart, user=request.user)
 
     if cart.items.exists() and request.method == 'POST':
