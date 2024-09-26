@@ -1,17 +1,17 @@
 {% if page_obj.has_previous %}
-  <a href="?page={{ page_obj.previous_page_number }}" class="button small">Prev</a>
+  <a href="?page={{ page_obj.previous_page_number }}" class=""></a>
 {% else %}
-  <a class="button small disabled">Prev</a>
+  <a class=""></a>
 {% endif %}
 {% for i in page_obj.paginator.page_range %}
   {% if page_obj.number == i %}
-    <a href="#" class="button small disabled">{{ i }}</a>
+    <a href="#" class=""></a>
   {% else %}
-    <a href="?page={{ i }}" class="button small">{{ i }}</a>
+    <a href="?page={{ i }}" class=""></a>
   {% endif %}
 {% endfor %}
 {% if page_obj.has_next %}
-  <a href="?page={{ page_obj.next_page_number }}" class="button small">Next</a>
+  <a href="?page={{ page_obj.next_page_number }}" class=""></a>
 {% else %}
-  <a class="button small disabled">Next</a>
+  <a class=""></a>
 {% endif %}
